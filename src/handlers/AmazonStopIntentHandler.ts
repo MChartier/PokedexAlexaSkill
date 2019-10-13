@@ -5,18 +5,18 @@ import { RequestHandlerBase } from "./RequestHandlerBase";
 export class AmazonStopIntentHandler extends RequestHandlerBase {
     constructor() {
         super({
-            IntentName: 'AMAZON.StopIntent',
-            RequestType: 'IntentRequest'
+            IntentName: "AMAZON.StopIntent",
+            RequestType: "IntentRequest"
         });
     }
 
-    handle(handlerInput: HandlerInput): Response {
+    async handle(handlerInput: HandlerInput): Promise<Response> {
         console.log("Handling AMAZON.StopIntent.");
 
         const responseBuilder = handlerInput.responseBuilder;
         return responseBuilder
-            .speak('Stopping.')
+            .speak("Good luck on your Pokemon journey!")
             .withShouldEndSession(true)
             .getResponse();
-    }   
+    }
 }

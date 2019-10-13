@@ -5,18 +5,18 @@ import { RequestHandlerBase } from "./RequestHandlerBase";
 export class AmazonCancelIntentHandler extends RequestHandlerBase {
     constructor() {
         super({
-            IntentName: 'AMAZON.CancelIntent',
-            RequestType: 'IntentRequest'
+            IntentName: "AMAZON.CancelIntent",
+            RequestType: "IntentRequest"
         });
     }
 
-    handle(handlerInput: HandlerInput): Response {
+    async handle(handlerInput: HandlerInput): Promise<Response> {
         console.log("Handling AMAZON.CancelIntent.");
 
         const responseBuilder = handlerInput.responseBuilder;
         return responseBuilder
-            .speak('Canceling.')
+            .speak("Good luck on your Pokemon journey!")
             .withShouldEndSession(true)
             .getResponse();
-    }   
+    }
 }

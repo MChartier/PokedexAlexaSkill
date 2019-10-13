@@ -5,13 +5,15 @@ import { RequestHandlerBase } from "./RequestHandlerBase";
 export class SessionEndedHandler extends RequestHandlerBase {
     constructor() {
         super({
-            RequestType: 'LaunchRequest'
+            RequestType: "LaunchRequest"
         });
     }
 
-    handle(handlerInput: HandlerInput): Response {
+    async handle(handlerInput: HandlerInput): Promise<Response> {
         const responseBuilder = handlerInput.responseBuilder;
-
-        return responseBuilder.getResponse();
-    }   
+        return responseBuilder
+            .speak("Good luck on your Pokemon journey!")
+            .withShouldEndSession(true)
+            .getResponse();
+    }
 }

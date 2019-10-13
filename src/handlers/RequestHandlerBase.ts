@@ -7,7 +7,6 @@ export interface HandlerConfig {
 }
 
 export abstract class RequestHandlerBase implements RequestHandler {
-
     private _requestType: string;
     private _intentName: string | undefined;
 
@@ -19,9 +18,12 @@ export abstract class RequestHandlerBase implements RequestHandler {
     canHandle(handlerInput: HandlerInput): boolean {
         // Can handle if request type matches and, for intent requests, the intent matches
         const request = handlerInput.requestEnvelope.request;
-        return request.type == this._requestType && 
-            (request.type != 'IntentRequest' || request.intent.name == this._intentName);
+        return (
+            request.type == this._requestType &&
+            (request.type != "IntentRequest" ||
+                request.intent.name == this._intentName)
+        );
     }
 
-    abstract handle(handlerInput: HandlerInput): Response;
+    abstract handle(handlerInput: HandlerInput): Promise<Response>;
 }

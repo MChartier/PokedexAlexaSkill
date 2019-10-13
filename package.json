@@ -1,29 +1,41 @@
 {
-  "name": "pokedexalexaskill",
-  "version": "1.0.0",
-  "description": "Pokedex (Unofficial) Skill for Alexa",
-  "main": "index.js",
-  "scripts": {
-    "build": "tsc -b tsconfig.json",
-    "clean": "tsc -b tsconfig.json --clean",
-    "format": "prettier --write \"./**/*.{ts,js,json,md}\"",
-    "lint": "eslint . --ext .js,.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "typecheck": "tsc -p tsconfig.json --noEmit",
-    "watch": "tsc --watch"
-  },
-  "author": "",
-  "license": "MIT",
-  "dependencies": {
-    "ask-sdk": "^2.7.0"
-  },
-  "devDependencies": {
-    "@types/node": "^12.7.12",
-    "@typescript-eslint/eslint-plugin": "^2.3.3",
-    "@typescript-eslint/parser": "^2.3.3",
-    "eslint": "^6.5.1",
-    "jest": "^24.9.0",
-    "prettier": "1.18.2",
-    "typescript": "^3.6.4"
-  }
+    "name": "pokedexalexaskill",
+    "version": "1.0.0",
+    "description": "Pokedex (Unofficial) Skill for Alexa",
+    "main": "index.js",
+    "scripts": {
+        "build": "tsc -b tsconfig.json",
+        "clean": "tsc -b tsconfig.json --clean",
+        "coverage": "jest --coverage",
+        "lint": "eslint . --ext .js,.ts",
+        "pack": "npm-pack-zip",
+        "test": "jest --config jest.config.js",
+        "typecheck": "tsc -p tsconfig.json --noEmit",
+        "watch": "tsc --watch"
+    },
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "ask-sdk": "^2.7.0",
+        "pokedex-promise-v2": "^3.2.0"
+    },
+    "devDependencies": {
+        "@types/jest": "^24.0.18",
+        "@types/node": "^12.7.12",
+        "@typescript-eslint/eslint-plugin": "^2.3.3",
+        "@typescript-eslint/parser": "^2.3.3",
+        "dts-gen": "^0.5.8",
+        "eslint": "^6.5.1",
+        "jest": "^24.9.0",
+        "npm-pack-zip": "^1.2.7",
+        "ts-jest": "^24.1.0",
+        "typescript": "^3.6.4"
+    },
+    "bundledDependencies": [
+        "ask-sdk",
+        "pokedex-promise-v2"
+    ],
+    "files": [
+        "dist/src/**"
+    ]
 }
