@@ -13,8 +13,12 @@
         "typecheck": "tsc -p tsconfig.json --noEmit",
         "watch": "tsc --watch"
     },
-    "author": "",
+    "author": "Matthew Chartier",
     "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/MChartier/PokedexAlexaSkill"
+    },
     "dependencies": {
         "ask-sdk": "^2.7.0",
         "pokedex-promise-v2": "^3.2.0"
