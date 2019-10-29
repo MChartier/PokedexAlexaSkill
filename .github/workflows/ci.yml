@@ -47,4 +47,4 @@ jobs:
         AWS_REGION: ${{ secrets.AWS_REGION }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       with:
-        args: --function-name pokedex-alexa-skill --zip-file deployable/pokedexalexaskill.zip --dry-run
+        args: --function-name pokedex-alexa-skill --zip-file deployable/pokedexalexaskill.zip --dry-run true
