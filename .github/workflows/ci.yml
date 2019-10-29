@@ -46,4 +46,4 @@ jobs:
         aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws configure set region ${{ secrets.AWS_REGION }}
         aws configure set output json
-        aws lambda update-function-code --function-name pokedex-alexa-skill --zip-file file://deployable/pokedexalexaskill.zip
+        aws lambda update-function-code --function-name pokedex-alexa-skill --zip-file fileb://deployable/pokedexalexaskill.zip
