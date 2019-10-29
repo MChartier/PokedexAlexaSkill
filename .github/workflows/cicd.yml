@@ -1,10 +1,9 @@
-name: CI
+name: CI/CD
 
 on:
   push:
     branches:
       - master
-      - feature/lambda-deploy
 
 jobs:
   build:
@@ -31,7 +30,7 @@ jobs:
         name: deployable
         path: pokedexalexaskill.zip
     
-  deploy:   
+  deploy:
     runs-on: ubuntu-latest
     needs: build
 
