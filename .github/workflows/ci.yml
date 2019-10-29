@@ -1,10 +1,13 @@
 name: CI
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
+      - feature/lambda-deploy
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -17,7 +20,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: yarn install, build, test, and pack
+    - name: yarn install, build, test, pack
       run: |
         npm install -g yarn
         yarn install --frozen-lockfile
@@ -26,3 +29,10 @@ jobs:
         yarn run pack
       env:
         CI: true
+    - name: AWS Lambda Deploy
+      uses: appleboy/lambda-action@v0.0.1
+      with:
+        function-name: pokedex-alexa-skill
+        zip-file: pokedexalexaskill.zip
+
+      
