@@ -28,7 +28,7 @@ jobs:
     - name: Upload build artifact
       uses: actions/upload-artifact@v1
       with:
-        name: zip-file
+        name: pokedexalexaskill.zip
         path: pokedexalexaskill.zip
     
   deploy:
@@ -39,7 +39,7 @@ jobs:
     - name: Download build artifact
       uses: actions/download-artifact@v1
       with:
-        name: zip-file
+        name: pokedexalexaskill.zip
     - name: AWS Lambda Deploy
       uses: appleboy/lambda-action@v0.0.1
       env:
