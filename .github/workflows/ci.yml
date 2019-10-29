@@ -42,7 +42,9 @@ jobs:
         name: zip-file
     - name: AWS Lambda Deploy
       uses: appleboy/lambda-action@v0.0.1
-      args:
-        --function-name: pokedex-alexa-skill
-        --zip-file: pokedexalexaskill.zip
-        --dry-run: true
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_REGION: ${{ secrets.AWS_REGION }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      with:
+        args: --function-name pokedex-alexa-skill --zip-file pokedexalexaskill.zip --dry-run
