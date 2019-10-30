@@ -1,0 +1,23 @@
+name: Continuous Integration
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+    - name: yarn install, build, test, pack
+      run: |
+        npm install -g yarn
+        yarn install --frozen-lockfile
+        yarn run build
+        yarn run test
+        yarn run pack
+      env:
+        CI: true
