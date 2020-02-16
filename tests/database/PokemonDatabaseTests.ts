@@ -17,6 +17,4 @@ test('getPokemonByNumber', async () => {
     expect(pokemon.Number).toBe(1);
     expect(pokemon.Descriptions).toBeTruthy();
     expect(pokemon.Genus).toBeTruthy();
-
-    console.log(pokemon.Descriptions);
 });
