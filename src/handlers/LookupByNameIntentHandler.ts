@@ -38,9 +38,13 @@ export class LookupByNameIntentHandler extends RequestHandlerBase {
                 .getResponse();
         }
 
+        // Retrieve the Pokemon with the given name
         const pokemon: Pokemon = await this.database.GetPokemonByName(pokemonName);
         
-        const description: string = pokemon.Descriptions[0];
+        // Get a random description from the available set
+        const description: string = pokemon.Descriptions[Math.floor(Math.random() * pokemon.Descriptions.length)];
+
+        // E.g. "Tiny Turtle Pokemon"
         const genus: string = pokemon.Genus;
 
         const speech = `${pokemon.Name}: the ${genus}. ${description}`;
