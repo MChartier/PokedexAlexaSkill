@@ -1,28 +1,27 @@
 import Pokemon from "../models/Pokemon";
-import Pokedex, { PokemonSpeciesResponse } from "../@types/pokedex-promise-v2/index";
+import { DocumentClient, GetItemOutput } from "aws-sdk/clients/dynamodb";
 
 export default class PokemonDatabase {
 
-    private pokedex: Pokedex;
+    private docClient: DocumentClient;
     constructor() {
         // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const Pokedex = require('pokedex-promise-v2');
+        const AWS = require('aws-sdk');
+        AWS.config.update({
+            region: 'us-east-1'
+        });
 
-        this.pokedex = new Pokedex({ timeout: 1000, cacheLimit: 1000});
+        this.docClient = new AWS.DynamoDB.DocumentClient();
     }
 
     async GetPokemonByName(pokemonName: string): Promise<Pokemon> {
         console.log(`GetPokemonByName: ${pokemonName}`);
-        const response: PokemonSpeciesResponse = await this.pokedex.getPokemonSpeciesByName(pokemonName.toLowerCase());
-        console.log(`Response from PokeApi: ${response}`);
-        return this.convertResponseToPokemon(response);
+        return this.getPokemonByName(pokemonName);
     }
 
     async GetPokemonByNumber(pokemonNumber: number): Promise<Pokemon> {
         console.log(`GetPokemonByNumber: ${pokemonNumber}`);
-        const response: PokemonSpeciesResponse = await this.pokedex.getPokemonSpeciesByName(pokemonNumber);
-        console.log(`Response from PokeApi: ${response}`);
-        return this.convertResponseToPokemon(response);
+        return this.getPokemonByNumber(pokemonNumber);
     }
 
     async GetRandomPokemon(): Promise<Pokemon> {
@@ -31,20 +30,60 @@ export default class PokemonDatabase {
         return await this.GetPokemonByNumber(randomNumber);
     }
 
-    private convertResponseToPokemon(response: PokemonSpeciesResponse): Pokemon {
-        // Capitalize Pokemon name
-        const name = response.name.charAt(0).toUpperCase() + response.name.slice(1);
-
-        const pokemon: Pokemon = {
-            Name: name,
-            Number: response.id,
-            Descriptions: response.flavor_text_entries
-                .filter(x => x.language.name === "en")
-                .map(x => x.flavor_text),
-            Genera: response.genera
-                .filter(x => x.language.name === "en")
-                .map(x => x.genus)
+    private async getPokemonByName(pokemonName: string): Promise<Pokemon> {
+        const params = {
+            TableName: "PokemonNumbers",
+            Key: {
+                "Name": pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1)
+            }
         };
-        return pokemon;
+
+        const response: GetItemOutput = await this.docClient.get(params).promise();
+        if (!response || !response.Item) {
+            if (!response || !response.Item) {
+                console.log("Invalid response from DynamoDB");
+                console.log(response);
+            }
+
+            throw response;
+        }
+
+        const pokemonNumber = Number(response.Item['Number']);
+        return this.getPokemonByNumber(pokemonNumber);
+    }
+
+    private async getPokemonByNumber(pokemonNumber: number): Promise<Pokemon> {
+        const params = {
+            TableName: "PokemonDescriptions",
+            Key: { 
+                "Id" : pokemonNumber
+              }
+        };
+
+        const response: GetItemOutput = await this.docClient.get(params).promise();
+        if (!response || !response.Item) {
+            console.log("Invalid response from DynamoDB");
+            console.log(response);
+            
+            throw response;
+        }
+
+        return this.rowToPokemon(response.Item);
+    }
+
+    private rowToPokemon(row: any): Pokemon {
+        if (!row.Name || !row.Genus || !row.Descriptions) {           
+            console.log("Invalid response from DynamoDB");
+            console.log(row);
+
+            throw row;
+        }
+
+        return {
+            Name: row.Name,
+            Number: Number(row.Id),
+            Genus: row.Genus,
+            Descriptions: row.Descriptions.values
+        };
     }
 }

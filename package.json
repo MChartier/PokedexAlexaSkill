@@ -1,6 +1,6 @@
 {
     "name": "pokedexalexaskill",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Pokedex (Unofficial) Skill for Alexa",
     "main": "index.js",
     "scripts": {
@@ -21,7 +21,7 @@
     },
     "dependencies": {
         "ask-sdk": "^2.7.0",
-        "pokedex-promise-v2": "^3.2.0"
+        "aws-sdk": "^2.610.0"
     },
     "devDependencies": {
         "@types/jest": "^24.0.18",
@@ -29,7 +29,7 @@
         "@typescript-eslint/eslint-plugin": "^2.3.3",
         "@typescript-eslint/parser": "^2.3.3",
         "dts-gen": "^0.5.8",
-        "eslint": "^6.5.1",
+        "eslint": "^6.8.0",
         "jest": "^24.9.0",
         "npm-pack-zip": "^1.2.7",
         "ts-jest": "^24.1.0",
@@ -37,7 +37,7 @@
     },
     "bundledDependencies": [
         "ask-sdk",
-        "pokedex-promise-v2"
+        "aws-sdk"
     ],
     "files": [
         "dist/src/**"

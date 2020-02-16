@@ -14,5 +14,5 @@ export default interface Pokemon {
      */
     Descriptions: string[];
 
-    Genera: string[];
+    Genus: string;
 }

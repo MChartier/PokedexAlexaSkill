@@ -35,7 +35,7 @@ export class LookupByNumberIntentHandler extends RequestHandlerBase {
         const pokemon: Pokemon = await this.database.GetPokemonByName(pokemonName);
         
         const description: string = pokemon.Descriptions[0];
-        const genus: string = pokemon.Genera[0];
+        const genus: string = pokemon.Genus;
 
         return responseBuilder
             .speak(`${pokemon.Name}: the ${genus}. ${description}`)

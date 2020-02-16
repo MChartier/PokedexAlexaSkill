@@ -8,7 +8,7 @@ test('getPokemonByName', async () => {
     expect(pokemon.Name).toBe("Bulbasaur");
     expect(pokemon.Number).toBe(1);
     expect(pokemon.Descriptions).toBeTruthy();
-    expect(pokemon.Genera).toBeTruthy();
+    expect(pokemon.Genus).toBeTruthy();
 });
 
 test('getPokemonByNumber', async () => {
@@ -16,5 +16,5 @@ test('getPokemonByNumber', async () => {
     expect(pokemon.Name).toBe("Bulbasaur");
     expect(pokemon.Number).toBe(1);
     expect(pokemon.Descriptions).toBeTruthy();
-    expect(pokemon.Genera).toBeTruthy();
+    expect(pokemon.Genus).toBeTruthy();
 });
