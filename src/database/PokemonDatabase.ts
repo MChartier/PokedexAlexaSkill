@@ -1,6 +1,5 @@
 import Pokemon from "../models/Pokemon";
 import { DocumentClient, GetItemOutput } from "aws-sdk/clients/dynamodb";
-import DynamoDB = require("aws-sdk/clients/dynamodb");
 
 export default class PokemonDatabase {
 
@@ -35,7 +34,7 @@ export default class PokemonDatabase {
         const params = {
             TableName: "PokemonNumbers",
             Key: {
-                "Name": pokemonName
+                "Name": pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1)
             }
         };
 
@@ -43,9 +42,10 @@ export default class PokemonDatabase {
         if (!response || !response.Item) {
             if (!response || !response.Item) {
                 console.log("Invalid response from DynamoDB");
-                throw -1;
+                console.log(response);
             }
-            throw -1;
+
+            throw response;
         }
 
         const pokemonNumber = Number(response.Item['Number']);
@@ -63,23 +63,27 @@ export default class PokemonDatabase {
         const response: GetItemOutput = await this.docClient.get(params).promise();
         if (!response || !response.Item) {
             console.log("Invalid response from DynamoDB");
-            throw -1;
+            console.log(response);
+            
+            throw response;
         }
 
         return this.rowToPokemon(response.Item);
     }
 
-    private rowToPokemon(row: DynamoDB.AttributeMap): Pokemon {
-        if (!row.Name.S || !row.Genus.S || !row.Descriptions.SS) {
-            console.log("Invalid response from DynamoDB: " + row);
-            throw -1;
+    private rowToPokemon(row: any): Pokemon {
+        if (!row.Name || !row.Genus || !row.Descriptions) {           
+            console.log("Invalid response from DynamoDB");
+            console.log(row);
+
+            throw row;
         }
 
         return {
-            Name: row.Name.S,
-            Number: Number(row.Id.N),
-            Genus: row.Genus.S,
-            Descriptions: Array.from(row.Descriptions.SS.values())
+            Name: row.Name,
+            Number: Number(row.Id),
+            Genus: row.Genus,
+            Descriptions: Array.from(row.Descriptions)
         };
     }
 }

@@ -4,7 +4,7 @@ import Pokemon from "../../src/models/Pokemon";
 const pokemonDatabase: PokemonDatabase = new PokemonDatabase();
 
 test('getPokemonByName', async () => {
-    const pokemon: Pokemon = await pokemonDatabase.GetPokemonByName("Bulbasaur");
+    const pokemon: Pokemon = await pokemonDatabase.GetPokemonByName("bulbasaur");
     expect(pokemon.Name).toBe("Bulbasaur");
     expect(pokemon.Number).toBe(1);
     expect(pokemon.Descriptions).toBeTruthy();
