@@ -83,7 +83,7 @@ export default class PokemonDatabase {
             Name: row.Name,
             Number: Number(row.Id),
             Genus: row.Genus,
-            Descriptions: Array.from(row.Descriptions)
+            Descriptions: row.Descriptions.values
         };
     }
 }
