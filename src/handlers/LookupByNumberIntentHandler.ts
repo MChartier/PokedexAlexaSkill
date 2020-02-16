@@ -24,17 +24,21 @@ export class LookupByNumberIntentHandler extends RequestHandlerBase {
             throw "Invalid IntentRequest";
         }
 
-        const pokemonName: string | undefined = intentRequest.intent.slots["Number"].value;
-        if (!pokemonName) {
+        const pokemonNumber: string | undefined = intentRequest.intent.slots["Number"].value;
+        if (!pokemonNumber) {
             return responseBuilder
                 .speak("Couldn't find that one!")
                 .withShouldEndSession(true)
                 .getResponse();
         }
 
-        const pokemon: Pokemon = await this.database.GetPokemonByName(pokemonName);
+        // Retrieve the Pokemon with the given name
+        const pokemon: Pokemon = await this.database.GetPokemonByNumber(parseInt(pokemonNumber));
         
-        const description: string = pokemon.Descriptions[0];
+        // Get a random description from the available set
+        const description: string = pokemon.Descriptions[Math.floor(Math.random() * pokemon.Descriptions.length)];
+
+        // E.g. "Tiny Turtle Pokemon"
         const genus: string = pokemon.Genus;
 
         return responseBuilder
