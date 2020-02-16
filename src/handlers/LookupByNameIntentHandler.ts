@@ -24,7 +24,13 @@ export class LookupByNameIntentHandler extends RequestHandlerBase {
             throw "Invalid IntentRequest";
         }
 
-        const pokemonName: string | undefined = intentRequest.intent.slots["PokemonName"].value;
+        const slot = intentRequest.intent.slots["PokemonName"];
+        let pokemonName: string | undefined = slot.value;
+        if (slot && slot.resolutions && slot.resolutions.resolutionsPerAuthority && slot.resolutions.resolutionsPerAuthority[0] && slot.resolutions.resolutionsPerAuthority[0].values) {
+            // Use resolved value if one is available
+            pokemonName = slot.resolutions.resolutionsPerAuthority[0].values[0].value.name;
+        }
+
         if (!pokemonName) {
             return responseBuilder
                 .speak("Couldn't find that one!")
